@@ -126,9 +126,7 @@ module Tmuxinator
     end
 
     def name
-      name = custom_name || yaml["project_name"] || yaml["name"]
-      name = blank?(name) ? nil : name.to_s.shellescape
-      in_current_session ? "" : name
+      in_current_session ? "" : full_name
     end
 
     def full_name
@@ -257,7 +255,7 @@ module Tmuxinator
     end
 
     def window(i)
-      "#{name}:#{i}"
+      in_current_session ? ":#{i}" : "#{name}:#{i}"
     end
 
     def send_pane_command(cmd, window_index, _pane_index)
